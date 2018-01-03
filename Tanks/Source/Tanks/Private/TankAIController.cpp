@@ -28,3 +28,33 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Tank not contolled by AI"));
 
 }
+void ATankAIController::aimAtCrosshair()
+{
+	if (!GetControlledTank())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tank not contolled by AI"));
+		return;
+	}
+
+	FVector hitLocation;
+	if (getCrosshairHitLocation(hitLocation)) 
+	{
+
+	}
+	
+}
+bool ATankAIController::getCrosshairHitLocation(FVector & outHitLocation)
+{
+	FVector2D crosshairLocationOnScreen = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+	
+	crosshairLocationOnScreen.X *= crosshairX;
+	crosshairLocationOnScreen.Y *= crosshairY;
+	UE_LOG(LogTemp, Warning, TEXT("Crosshair location: %s"), *(crosshairLocationOnScreen.ToString()));
+	return true;
+}
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	aimAtCrosshair();
+}
