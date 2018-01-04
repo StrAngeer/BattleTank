@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Tank.h"
+//#include "Engine.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
@@ -18,8 +19,18 @@ public:
 	
 	ATank* GetControlledTank();
 
+	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 	
+	void aimAtCrosshair();
+	bool getCrosshairHitLocation(FVector& outHitLocation);
+
+	UPROPERTY(EditAnywhere)
+		float crosshairX = 0.5;
+
+	UPROPERTY(EditAnywhere)
+		float crosshairY = 0.33333;
 	
-	
+	UPROPERTY(EditAnywhere)
+		float hitRange = 1000000.f;
 };
