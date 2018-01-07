@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "Engine.h"
 #include "tankBarrel.h"
+#include "tankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -35,7 +36,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::aimAt(FVector target, float launchSpeed)
 {
-	if (!barrel)
+	if (!barrel || !turret)
 		return;
 	FVector outLaunchVel;
 	FVector startLocation = barrel->GetSocketLocation(FName("BulletSocket"));
@@ -43,15 +44,19 @@ void UTankAimingComponent::aimAt(FVector target, float launchSpeed)
 
 	auto aimDirection = outLaunchVel.GetSafeNormal();
 	moveBarrel(aimDirection);
+	moveTurret(aimDirection);
 	//UE_LOG(LogTemp, Warning, TEXT("aiming at: %s"), *aimDirection.ToString());
 	//auto thisTankName = GetOwner()->GetName();
 	//auto barrelLocation = barrel->GetComponentLocation();
 	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from: %s"), *thisTankName, *(target.ToString()), *barrelLocation.ToString());
 }
 
-void UTankAimingComponent::setBarrel(UtankBarrel* Barrel)
+
+
+void UTankAimingComponent::setBarrelAndTurret(UtankBarrel * Barrel, UtankTurret * Turret)
 {
 	barrel = Barrel;
+	turret = Turret;
 }
 
 void UTankAimingComponent::moveBarrel(FVector aimDir)
@@ -60,6 +65,18 @@ void UTankAimingComponent::moveBarrel(FVector aimDir)
 	auto deltaRotator = aimDir.Rotation() - barrel->GetForwardVector().Rotation();
 	
 	barrel->elevate(deltaRotator.Pitch);
-	UE_LOG(LogTemp, Warning, TEXT("aiming at: %s"), *deltaRotator.ToString());
+	
+}
+
+void UTankAimingComponent::moveTurret(FVector aimDir)
+{
+	FRotator rotationChange = aimDir.Rotation() - turret->GetForwardVector().Rotation();
+	//UE_LOG(LogTemp, Warning, TEXT("rotation change: %f"), rotationChange.Yaw);
+	if (rotationChange.Yaw > 180)
+		rotationChange.Yaw -= 360;
+	if (rotationChange.Yaw < -180)
+		rotationChange.Yaw += 360;
+	turret->rotate(rotationChange.Yaw);
+	// zrob tankTurret class
 }
 

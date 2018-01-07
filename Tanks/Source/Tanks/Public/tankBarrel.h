@@ -18,7 +18,7 @@ public:
 		void elevate(float relativeSpeed);
 
 		UPROPERTY(EditAnywhere)
-			float maxRotateSpeed = 8;
+			float maxRotateSpeed = 15;
 		UPROPERTY(EditAnywhere)
 			float maxElevation = 20;
 		UPROPERTY(EditAnywhere)

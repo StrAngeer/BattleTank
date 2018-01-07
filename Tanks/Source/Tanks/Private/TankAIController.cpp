@@ -33,5 +33,13 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	GetControlledTank()->aimAt(GetPlayerTank()->GetActorLocation());
-
+	if (tempForReload >= reloadTime)
+	{
+		GetControlledTank()->fire();
+		tempForReload = 0;
+	}
+	else
+	{
+		tempForReload += DeltaTime;
+	}
 }

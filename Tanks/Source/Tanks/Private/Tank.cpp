@@ -3,12 +3,15 @@
 #include "Tank.h"
 #include "TankAimingComponent.h"
 #include "tankBarrel.h"
+#include "tankTurret.h"
+#include "Engine/World.h"
+#include "Projectile.h"
 
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	aimingComp = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
@@ -40,8 +43,20 @@ void ATank::aimAt(FVector hitLocation)
 
 }
 
-void ATank::setBarrel(UtankBarrel * Barrel)
+void ATank::setBarrelAndTurret(UtankBarrel* Barrel, UtankTurret* Turret)
 {
-	aimingComp->setBarrel(Barrel);
+	aimingComp->setBarrelAndTurret(Barrel, Turret);
+	barrel = Barrel;
+}
+
+void ATank::fire()
+{
+
+	//UE_LOG(LogTemp, Warning, TEXT("Firing"));
+
+	if (!barrel)return;
+
+	auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBP, barrel->GetSocketLocation(FName("BulletSocket")), barrel->GetSocketRotation(FName("BulletSocket")));
+	projectile->launchProjectile(launchSpeed);
 }
 

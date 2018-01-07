@@ -22,5 +22,8 @@ public:
 	ATank* GetPlayerTank();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+private:
+	float reloadTime = 3;
+	float tempForReload = 0;
 	
 };
