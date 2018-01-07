@@ -2,9 +2,13 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
+
+class UTankAimingComponent;
+class UtankBarrel;
 
 UCLASS()
 class TANKS_API ATank : public APawn
@@ -18,14 +22,24 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	UTankAimingComponent* aimingComp = nullptr;
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void aimAt(FVector hitLocation);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void setBarrel(UtankBarrel* Barrel);
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float launchSpeed = 10000;
+
+private:
+	
 	
 };
