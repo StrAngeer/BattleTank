@@ -11,6 +11,7 @@ class UTankAimingComponent;
 class UtankBarrel;
 class Utankturret;
 class AProjectile;
+class UtankMovementComponent;
 
 UCLASS()
 class TANKS_API ATank : public APawn
@@ -27,7 +28,8 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 	UTankAimingComponent* aimingComp = nullptr;
-
+	UPROPERTY(BlueprintReadOnly)
+	UtankMovementComponent* movementComp = nullptr;
 public:	
 	// Called every frame
 	
