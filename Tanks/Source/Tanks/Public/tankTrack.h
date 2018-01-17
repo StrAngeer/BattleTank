@@ -14,13 +14,15 @@ class TANKS_API UtankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 
+public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void setThrottle(float throttle);
 
+private:
 	UPROPERTY(EditDefaultsOnly)
 		float maxMovingForce = 800000;//w njutonach, a tak du¿o bo to czo³g 40 ton
 
-
+	
 	
 	
 };

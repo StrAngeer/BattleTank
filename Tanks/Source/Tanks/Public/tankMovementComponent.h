@@ -6,16 +6,29 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "tankMovementComponent.generated.h"
 
+class UtankTrack;
 /**
  * 
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKS_API UtankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()
 
-		UFUNCTION(BlueprintCallable, Category = Movement)
-		void intendToMove(float thro);
+public:
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void intendToMove(float thro);
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+		void intendToTurn(float thro);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void setTracks(UtankTrack* leftTrack, UtankTrack* rightTrack);
 	
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+private:
+	UtankTrack* lTrack = nullptr;
+	UtankTrack* rTrack = nullptr;
+
 	
 };

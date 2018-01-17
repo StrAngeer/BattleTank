@@ -22,6 +22,12 @@ public:
 	ATank* GetPlayerTank();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere)
+	float acceptanceRadius = 3000.f;
+
+	
+
 private:
 	float reloadTime = 3;
 	float tempForReload = 0;
