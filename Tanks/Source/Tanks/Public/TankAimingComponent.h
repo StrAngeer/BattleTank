@@ -8,6 +8,14 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+UENUM(BlueprintType)
+enum class EFiringState : uint8
+{
+	reloading,
+	aiming,
+	locked
+};
+
 class UtankBarrel;
 class UtankTurret;
 
@@ -36,4 +44,6 @@ private:
 	UtankTurret* turret = nullptr;
 	void moveBarrel(FVector aimDir);
 	void moveTurret(FVector aimDir);
+
+	EFiringState firingState = EFiringState::reloading;
 };

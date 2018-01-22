@@ -17,6 +17,8 @@ class TANKS_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank();
 
 	virtual void Tick(float DeltaTime) override;
