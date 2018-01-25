@@ -5,12 +5,14 @@
 
 void UtankMovementComponent::intendToMove(float thro)
 {
+	if (!ensure(lTrack && rTrack))return;
 	lTrack->setThrottle(thro);
 	rTrack->setThrottle(thro);
 }
 
 void UtankMovementComponent::intendToTurn(float thro)
 {
+	if (!ensure(lTrack && rTrack))return;
 	lTrack->setThrottle(-thro);
 	rTrack->setThrottle(thro);
 }

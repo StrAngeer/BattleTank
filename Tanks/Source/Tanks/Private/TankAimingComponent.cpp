@@ -16,27 +16,9 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
 void UTankAimingComponent::aimAt(FVector target, float launchSpeed)
 {
-	if (!barrel || !turret)
+	if (!ensure(barrel && turret))
 		return;
 	FVector outLaunchVel;
 	FVector startLocation = barrel->GetSocketLocation(FName("BulletSocket"));

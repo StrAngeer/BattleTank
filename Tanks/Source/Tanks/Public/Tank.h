@@ -9,9 +9,8 @@
 
 class UTankAimingComponent;
 class UtankBarrel;
-class Utankturret;
 class AProjectile;
-class UtankMovementComponent;
+
 
 UCLASS()
 class TANKS_API ATank : public APawn
@@ -21,15 +20,17 @@ class TANKS_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-
+	
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 
-	UTankAimingComponent* aimingComp = nullptr;
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+
+	
 	UPROPERTY(BlueprintReadOnly)
-	UtankMovementComponent* movementComp = nullptr;
+		UTankAimingComponent* aimingComp = nullptr;
+
 public:	
 	// Called every frame
 	
@@ -38,8 +39,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void aimAt(FVector hitLocation);
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void setBarrelAndTurret(UtankBarrel* Barrel, UtankTurret* Turret);
+	
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float launchSpeed = 10000;

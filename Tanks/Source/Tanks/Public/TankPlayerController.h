@@ -2,15 +2,19 @@
 
 #pragma once
 
-#include "Tank.h"
 //#include "Engine.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
+
 /**
  * 
  */
+
+
+
+
 UCLASS()
 class TANKS_API ATankPlayerController : public APlayerController
 {
@@ -20,6 +24,9 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void foundAimingComp(UTankAimingComponent* aimCompRef);
 
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
