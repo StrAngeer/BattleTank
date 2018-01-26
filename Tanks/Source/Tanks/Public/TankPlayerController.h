@@ -22,8 +22,8 @@ class TANKS_API ATankPlayerController : public APlayerController
 public:
 	
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank();
+	
+	
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void foundAimingComp(UTankAimingComponent* aimCompRef);

@@ -36,13 +36,16 @@ protected:
 
 public:	
 	
-	void aimAt(FVector target, float launchSpeed);
+	void aimAt(FVector target);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void setBarrelAndTurret(UtankBarrel* Barrel, UtankTurret* Turret);
 	
-
+	
 private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float launchSpeed = 10000;
+
 	UtankBarrel* barrel = nullptr;
 	UtankTurret* turret = nullptr;
 	void moveBarrel(FVector aimDir);

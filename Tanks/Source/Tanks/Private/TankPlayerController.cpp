@@ -2,32 +2,28 @@
 
 
 #include "TankPlayerController.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
+#include "GameFramework/Pawn.h"
 
-ATank * ATankPlayerController::GetControlledTank()
-{
-	
-	return Cast<ATank>(GetPawn());
-
-}
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto aimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	auto aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(aimingComponent))return;
 	foundAimingComp(aimingComponent);
 	
 }
 
 void ATankPlayerController::aimAtCrosshair()
 {
-	if (!ensure(GetControlledTank())){return;}
+	auto aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(aimingComponent))return;
 
 	FVector hitLocation;
 	if (getCrosshairHitLocation(hitLocation))
 	{
-		GetControlledTank()->aimAt(hitLocation);
+		aimingComponent->aimAt(hitLocation);
 	}
 
 }

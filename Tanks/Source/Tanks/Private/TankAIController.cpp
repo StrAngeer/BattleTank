@@ -1,38 +1,32 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "TankAimingComponent.h"
+#include "GameFramework/Pawn.h"
 
 
 
-
-ATank * ATankAIController::GetControlledTank()
+APawn * ATankAIController::GetPlayerTank()
 {
-
-	return Cast<ATank>(GetPawn());
-
-}
-
-ATank * ATankAIController::GetPlayerTank()
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	return GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	if (GetControlledTank())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Getting AI Controlled Tank: %s"), *(GetControlledTank()->GetName()));
-	}
-	else
-		UE_LOG(LogTemp, Warning, TEXT("Tank not contolled by AI"));
-
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	GetControlledTank()->aimAt(GetPlayerTank()->GetActorLocation());
+	
+	if (!ensure(GetPlayerTank() && GetPawn()))return;
+
+	auto aimingComp = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(aimingComp))return;
+
+	aimingComp->aimAt(GetPlayerTank()->GetActorLocation());
+
 	if (tempForReload >= reloadTime)
 	{
 		//GetControlledTank()->fire();

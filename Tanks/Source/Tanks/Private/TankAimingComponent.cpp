@@ -16,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::aimAt(FVector target, float launchSpeed)
+void UTankAimingComponent::aimAt(FVector target)
 {
 	if (!ensure(barrel && turret))
 		return;

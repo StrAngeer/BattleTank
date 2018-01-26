@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Tank.h"
+
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "Engine.h"
@@ -18,8 +18,9 @@ class TANKS_API ATankAIController : public AAIController
 	GENERATED_BODY()
 public:
 	
-	ATank* GetControlledTank();
-	ATank* GetPlayerTank();
+	
+	APawn* GetPlayerTank();
+
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 

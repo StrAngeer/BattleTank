@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "TankAimingComponent.h"
 #include "tankBarrel.h"
 #include "Engine/World.h"
 #include "Projectile.h"
@@ -29,7 +28,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	aimingComp = FindComponentByClass<UTankAimingComponent>();
+	
 }
 
 // Called to bind functionality to input
@@ -39,12 +38,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATank::aimAt(FVector hitLocation)
-{
-	if (!ensure(aimingComp))return;
-	aimingComp->aimAt(hitLocation, launchSpeed);
 
-}
 
 
 

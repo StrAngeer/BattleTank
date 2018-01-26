@@ -7,7 +7,7 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankAimingComponent;
+
 class UtankBarrel;
 class AProjectile;
 
@@ -28,8 +28,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* aimingComp = nullptr;
+	
 
 public:	
 	// Called every frame
@@ -38,7 +37,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void aimAt(FVector hitLocation);
+	
 	
 
 	UPROPERTY(EditAnywhere, Category = Firing)
