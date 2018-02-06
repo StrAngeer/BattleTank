@@ -19,9 +19,13 @@ public:
 	void setThrottle(float throttle);
 
 private:
+	UtankTrack();
+
+
 	UPROPERTY(EditDefaultsOnly)
 		float maxMovingForce = 800000;//w njutonach, a tak du¿o bo to czo³g 40 ton
 
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
 	
 	
