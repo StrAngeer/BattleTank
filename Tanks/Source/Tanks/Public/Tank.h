@@ -8,7 +8,7 @@
 #include "Tank.generated.h"
 
 
-class UtankBarrel;
+
 class AProjectile;
 
 
@@ -38,16 +38,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	
-	
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-		float launchSpeed = 10000;
-	UFUNCTION(BlueprintCallable, Category = Firing)
-		void fire();
-	UPROPERTY(EditAnywhere, Category = Setup)
-		TSubclassOf<AProjectile> projectileBP;
 
 private:
-	UtankBarrel* barrel = nullptr;
+
 	
 };

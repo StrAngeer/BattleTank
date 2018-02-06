@@ -18,6 +18,7 @@ enum class EFiringState : uint8
 
 class UtankBarrel;
 class UtankTurret;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TANKS_API UTankAimingComponent : public UActorComponent
@@ -42,14 +43,34 @@ public:
 	void setBarrelAndTurret(UtankBarrel* Barrel, UtankTurret* Turret);
 	
 	
-private:
+
+
+	// Called to bind functionality to input
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
+
+
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float launchSpeed = 10000;
+	UFUNCTION(BlueprintCallable, Category = Firing)
+		void fire();
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<AProjectile> projectileBP;
+
+
+
+private:
+	
 
 	UtankBarrel* barrel = nullptr;
 	UtankTurret* turret = nullptr;
 	void moveBarrel(FVector aimDir);
 	void moveTurret(FVector aimDir);
 
-	
+	float reloadTimeS = 3;
+	float lastFireTime=0;
+
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };

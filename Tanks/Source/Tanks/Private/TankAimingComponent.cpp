@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "tankBarrel.h"
 #include "tankTurret.h"
+#include "Projectile.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -14,6 +15,23 @@ UTankAimingComponent::UTankAimingComponent()
 
 	// ...
 }
+
+void UTankAimingComponent::BeginPlay()
+{
+	lastFireTime = FPlatformTime::Seconds();
+	firingState = EFiringState::reloading;
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	if ((FPlatformTime::Seconds() - lastFireTime) > reloadTimeS)
+	{
+		firingState = EFiringState::locked;
+	}
+	else
+		firingState = EFiringState::reloading;
+}
+
 
 
 void UTankAimingComponent::aimAt(FVector target)
@@ -60,5 +78,22 @@ void UTankAimingComponent::moveTurret(FVector aimDir)
 		rotationChange.Yaw += 360;
 	turret->rotate(rotationChange.Yaw);
 	// zrob tankTurret class
+}
+
+void UTankAimingComponent::fire()
+{
+
+	//UE_LOG(LogTemp, Warning, TEXT("Firing"));
+	//bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeS;
+	if (!ensure(barrel && projectileBP))return;
+
+
+	if (firingState != EFiringState::reloading)
+	{
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBP, barrel->GetSocketLocation(FName("BulletSocket")), barrel->GetSocketRotation(FName("BulletSocket")));
+		projectile->launchProjectile(launchSpeed);
+		lastFireTime = FPlatformTime::Seconds();
+	}
+	
 }
 
