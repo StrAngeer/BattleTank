@@ -2,10 +2,13 @@
 
 #pragma once
 
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
+
 
 
 UCLASS()
@@ -28,5 +31,20 @@ public:
 
 private:
 	UProjectileMovementComponent* projectileMovement = nullptr;
-	
+
+	UPROPERTY(VisibleAnywhere, Category = "component")
+	UStaticMeshComponent* collisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "component")
+	UParticleSystemComponent* launchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "component")
+	UParticleSystemComponent* impactBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "component")
+	URadialForceComponent* explosionForce = nullptr;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 };

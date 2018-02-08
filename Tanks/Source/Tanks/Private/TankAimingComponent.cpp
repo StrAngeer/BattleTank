@@ -27,12 +27,19 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((FPlatformTime::Seconds() - lastFireTime) > reloadTimeS)
+	if (roundsLeft > 0)
 	{
-		firingState = EFiringState::locked;
-	}
-	else
-		firingState = EFiringState::reloading;
+
+
+		if ((FPlatformTime::Seconds() - lastFireTime) > reloadTimeS)
+		{
+			firingState = EFiringState::locked;
+		}
+		else
+			firingState = EFiringState::reloading;
+
+	}else
+		firingState = EFiringState::outOfAmmo;
 }
 
 
@@ -83,6 +90,11 @@ void UTankAimingComponent::moveTurret(FVector aimDir)
 	// zrob tankTurret class
 }
 
+int UTankAimingComponent::getRoundsLeft()
+{
+	return roundsLeft;
+}
+
 void UTankAimingComponent::fire()
 {
 
@@ -91,11 +103,12 @@ void UTankAimingComponent::fire()
 	if (!ensure(barrel && projectileBP))return;
 
 
-	if (firingState != EFiringState::reloading)
+	if (firingState != EFiringState::reloading && firingState != EFiringState::outOfAmmo)
 	{
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBP, barrel->GetSocketLocation(FName("BulletSocket")), barrel->GetSocketRotation(FName("BulletSocket")));
 		projectile->launchProjectile(launchSpeed);
 		lastFireTime = FPlatformTime::Seconds();
+		roundsLeft--;
 	}
 	
 }

@@ -23,10 +23,14 @@ private:
 
 
 	UPROPERTY(EditDefaultsOnly)
-		float maxMovingForce = 800000;//w njutonach, a tak du¿o bo to czo³g 40 ton
+		float maxMovingForce = 40000000.0;
 
-	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
-	
+	void driveTrack();
+	virtual void BeginPlay() override;
+	float currThrottle = 0;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 };

@@ -13,7 +13,8 @@ enum class EFiringState : uint8
 {
 	reloading,
 	aiming,
-	locked
+	locked,
+	outOfAmmo
 };
 
 class UtankBarrel;
@@ -48,8 +49,8 @@ public:
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
-
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	int getRoundsLeft();
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float launchSpeed = 10000;
@@ -70,6 +71,9 @@ private:
 
 	float reloadTimeS = 3;
 	float lastFireTime=0;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	int32 roundsLeft = 5;
 
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
