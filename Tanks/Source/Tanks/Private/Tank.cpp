@@ -15,11 +15,32 @@ ATank::ATank()
 // Called when the game starts or when spawned
 
 
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 damageToApply = FMath::Clamp<int32>(DamageAmount, 0, currHP);
+	if (currHP > 0)
+	{
+		currHP -= damageToApply;
+	}
+	else
+	{
+		OnDeath.Broadcast();
+	}
+
+	return damageToApply;
+
+}
+
+float ATank::getHPpercent() const
+{
+	return (float)currHP / (float)startingHP;
+}
+
 // Called every frame
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 void ATank::BeginPlay()

@@ -2,6 +2,7 @@
 
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -50,8 +51,26 @@ void AProjectile::launchProjectile(float speed)
 
 void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
 {
-	launchBlast->Deactivate();
+	
 	impactBlast->Activate();
 	explosionForce->FireImpulse();
+
+
+
+	UGameplayStatics::ApplyRadialDamage(this, projectileDmg, GetActorLocation(),
+		explosionForce->Radius, UDamageType::StaticClass(), TArray<AActor*>()
+	);
+
+	launchBlast->Deactivate();
+	collisionMesh->DestroyComponent();
+
+
+
+	FTimerHandle timer;
+	GetWorld()->GetTimerManager().SetTimer(timer, this, &AProjectile::DESTROYY, destroyDelay, false);
 }
 
+void AProjectile::DESTROYY()
+{
+	Destroy();
+}

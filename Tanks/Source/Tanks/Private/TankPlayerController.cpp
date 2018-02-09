@@ -4,6 +4,7 @@
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
+#include "Tank.h"
 
 
 void ATankPlayerController::BeginPlay()
@@ -52,6 +53,21 @@ bool ATankPlayerController::getCrosshairHitLocation(FVector & outHitLocation)
 	}
 	
 	return false;
+}
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto possessedTank = Cast<ATank>(InPawn);
+		if (!ensure(possessedTank)) { return; }
+		possessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::onPosessedTankDeath);
+
+	}
+}
+void ATankPlayerController::onPosessedTankDeath()
+{
+	StartSpectatingOnly();
 }
 void ATankPlayerController::Tick(float DeltaTime)
 {

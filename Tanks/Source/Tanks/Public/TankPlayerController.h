@@ -42,4 +42,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 		float hitRange = 1000000.f;
+private:
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void onPosessedTankDeath();
 };

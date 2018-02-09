@@ -9,6 +9,9 @@
 #include "TankAIController.generated.h"
 
 
+
+
+
 /**
  * 
  */
@@ -21,9 +24,8 @@ public:
 	
 	APawn* GetPlayerTank();
 
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 
+protected:
 	UPROPERTY(EditAnywhere)
 	float acceptanceRadius = 30.f;
 
@@ -33,4 +35,11 @@ private:
 	float reloadTime = 3;
 	float tempForReload = 0;
 	
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void onPosessedTankDeath();
 };
